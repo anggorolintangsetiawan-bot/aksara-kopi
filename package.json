@@ -1,13 +1,13 @@
 {
   "name": "aksara-kopi",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Website Aksara Kopi",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Dewa Anggoro",
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
