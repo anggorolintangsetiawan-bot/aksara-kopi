@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aksara Kopi — Magetan</title>
+<link rel="icon" href="logo.png" type="image/png">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+ <style>
+:root {
+  --kopi: #1C0F05;
+  --coklat: #5C3317;
+  --emas: #B8832A;
+  --krem: #F0E6D0;
+  --susu: #FAF5EC;
+  --hijau: #2A3D2A;
+  --putih: #FDFAF5;
+  --merah: #C0392B;
+  --shadow: 0 4px 24px rgba(28,15,5,0.10);
+  --shadow-lg: 0 12px 40px rgba(28,15,5,0.16);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+
+body{
+  background:var(--susu);
+  color:var(--kopi);
+  font-family:'DM Sans',sans-serif;
+  overflow-x:hidden;
+}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:6px;}
+::-webkit-scrollbar-track{background:var(--krem);}
+::-webkit-scrollbar-thumb{background:var(--emas);border-radius:3px;}
+
+/* NAV */
+nav{
+  position:fixed;
+  top:0;
+  width:100%;
+  z-index:200;
+  padding:1rem 2.5rem;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;transition:all 0.3s;
+}
+
+nav.scrolled{
+  background:rgba(253,250,245,0.96);
+  backdrop-filter:blur(16px);
+  box-shadow:0 1px 20px rgba(28,15,5,0.08);
+}
+
+.nav-logo{
+  display:flex;
+  flex-direction:column;
+  line-height:1;
+}
+
+.nav-logo-id{
+  font-family:'Playfair Display',serif;font-size:1.3rem;
+  font-weight:700;color:var(--kopi);
+}
+
+.nav-logo-jawa{
+  font-size:0.85rem;
+  color:var(--emas);
+  letter-spacing:0.05em;
+}
+
+.nav-links{
+  display:flex;
+  gap:2rem;list-style:none;
+}
+.nav-links a{
+  font-size:0.85rem;
+  color:var(--coklat);
+  text-decoration:none;
+  font-weight:500;
+  letter-spacing:0.03em;
+  transition:color 0.2s;
+  position:relative;
+}
+
+.nav-links a::after{
+  content:'';
+  position:absolute;
+  bottom:-3px;
+  left:0;
+  width:0;
+  height:1.5px;
+  background:var(--emas);
+  transition:width 0.25s;
+}
+
+.nav-links a:hover{
+  color:var(--emas);}
+.nav-links a:hover::after{width:100%;}
+.nav-actions{display:flex;gap:0.75rem;align-items:center;}
+.cart-btn{position:relative;background:var(--krem);border:none;width:38px;height:38px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1rem;transition:background 0.2s;}
+.cart-btn:hover{background:var(--krem);}
+.cart-count{position:absolute;top:-3px;right:-3px;background:var(--emas);color:#fff;width:17px;height:17px;border-radius:50%;font-size:0.65rem;font-weight:600;display:flex;align-items:center;justify-content:center;}
+.btn-pesan{background:var(--kopi);color:var(--susu);padding:0.5rem 1.3rem;border-radius:99px;font-size:0.82rem;font-weight:500;text-decoration:none;border:none;cursor:pointer;transition:all 0.2s;}
+.btn-pesan:hover{background:var(--emas);transform:translateY(-1px);}
+
+/* HERO */
+.hero {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  padding: 5.5rem 2.5rem 3rem;
+  gap: 2rem;
+  position: relative;
+  overflow: hidden;
+
+  /* BACKGROUND UTAMA (gambar + overlay gelap) */
+  background: 
+    linear-gradient(
+      rgba(0,0,0,0.3),
+      rgba(0,0,0,0.3)
+    ),
+    url('./hero.png') center/cover no-repeat;
+}
+
+.hero-img{
+  width:100%;
+  height:180px;
+  object-fit:cover;
+  border-radius:16px;
+  margin-bottom:1rem;
+}
+
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 70% 40%, rgba(184,131,42,0.06) 0%, transparent 60%);z-index:0;}
+.hero-text{position:relative;z-index:1; color: #745707;}
+.hero-waktu{display:inline-flex;align-items:center;gap:6px;background:var(--krem);color:var(--coklat);padding:0.3rem 1rem;border-radius:99px;font-size:0.72rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:1.2rem;animation:up 0.6s ease both;}
+.hero-title{font-family:'Playfair Display',serif;font-size:clamp(2.5rem,4vw,3.6rem);line-height:1.1;font-weight:700;margin-bottom:0.4rem;animation:up 0.7s 0.1s ease both;}
+.hero-jawa{font-family:'Playfair Display',serif;font-size:clamp(1.2rem,2vw,1.6rem);color:var(--emas);font-style:italic;margin-bottom:1rem;animation:up 0.7s 0.15s ease both;}
+.hero-desc{font-size:0.95rem;color: #B8832A;line-height:1.75;max-width:420px;font-weight:300;margin-bottom:2rem;animation:up 0.7s 0.2s ease both;}
+.hero-btns{display:flex;gap:1rem;align-items:center;animation:up 0.7s 0.25s ease both;}
+.btn-main{background:var(--kopi);color:var(--susu);padding:0.75rem 2rem;border-radius:99px;font-size:0.88rem;font-weight:500;border:none;cursor:pointer;transition:all 0.2s;}
+.btn-main:hover{background:var(--emas);transform:translateY(-2px);box-shadow:0 8px 24px rgba(184,131,42,0.3);}
+.btn-ghost{color:var(--kopi);font-size:0.88rem;font-weight:500;background:none;border:1.5px solid var(--krem);padding:0.75rem 1.5rem;border-radius:99px;cursor:pointer;transition:all 0.2s;}
+.btn-ghost:hover{border-color:var(--emas);color:var(--emas);}
+.hero-info{display:flex;gap:1.5rem;margin-top:2rem;animation:up 0.7s 0.3s ease both;}
+.info-chip{display:flex;align-items:center;gap:6px;font-size:0.75rem;color:var(--coklat);}
+.hero-visual{position:relative;z-index:1;display:flex;justify-content:center;animation:fadein 0.9s 0.3s ease both;}
+.hero-card{background:var(--kopi);border-radius:24px;padding:2rem;max-width:320px;width:100%;color:var(--susu);position:relative;overflow:hidden;}
+.hero-card::before{content:'';position:absolute;top:-50px;right:-50px;width:200px;height:200px;border-radius:50%;background:rgba(184,131,42,0.1);}
+.hcard-label{font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:rgba(240,230,208,0.5);margin-bottom:0.75rem;}
+.hcard-title{font-family:'Playfair Display',serif;font-size:1.5rem;margin-bottom:0.4rem;}
+.hcard-sub{font-size:0.82rem;color:rgba(240,230,208,0.65);line-height:1.5;margin-bottom:1.5rem;font-weight:300;}
+.hcard-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.5rem;margin-bottom:1.5rem;}
+.hstat{text-align:center;background:rgba(255,255,255,0.05);border-radius:10px;padding:0.6rem 0.3rem;}
+.hstat-num{font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--emas);font-weight:700;}
+.hstat-label{font-size:0.62rem;color:rgba(240,230,208,0.5);margin-top:2px;}
+.hcard-order{background:var(--emas);color:var(--putih);padding:0.6rem 1.2rem;border-radius:99px;font-size:0.8rem;font-weight:500;border:none;cursor:pointer;width:100%;transition:all 0.2s;}
+.hcard-order:hover{background:#9a6b1e;}
+
+/* TICKER */
+.ticker{background:var(--kopi);padding:0.65rem 0;overflow:hidden;}
+.ticker-inner{display:flex;gap:3rem;animation:ticker 20s linear infinite;white-space:nowrap;}
+.ticker-item{color:rgba(240,230,208,0.5);font-size:0.75rem;letter-spacing:0.08em;display:flex;align-items:center;gap:0.5rem;}
+.ticker-item span{color:var(--emas);}
+
+/* MENU SECTION */
+.menu-section{padding:5rem 2.5rem;background:var(--putih);}
+.section-head{margin-bottom:2.5rem;}
+.s-tag{font-size:0.7rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--emas);display:block;margin-bottom:0.4rem;}
+.s-title{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,3vw,2.5rem);font-weight:700;color:var(--kopi);line-height:1.15;margin-bottom:0.5rem;}
+.s-sub{font-size:0.9rem;color:var(--coklat);font-weight:300;max-width:480px;}
+.menu-filter{display:flex;gap:0.5rem;margin-bottom:2rem;flex-wrap:wrap;}
+.filter-btn{padding:0.4rem 1.1rem;border-radius:99px;border:1px solid var(--krem);background:transparent;color:var(--coklat);font-size:0.8rem;font-weight:500;cursor:pointer;transition:all 0.2s;font-family:'DM Sans',sans-serif;}
+.filter-btn.active,.filter-btn:hover{background:var(--kopi);color:var(--susu);border-color:var(--kopi);}
+.menu-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;}
+.menu-card{background:var(--susu);border-radius:18px;overflow:hidden;transition:transform 0.25s,box-shadow 0.25s;cursor:pointer;border:0.5px solid var(--krem);}
+.menu-card:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg);}
+.menu-img{
+  height:160px;
+  background:#eee;
+  overflow:hidden;
+  border-bottom:1px solid var(--krem);
+}
+
+.menu-img img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+.menu-badge-pop{position:absolute;top:10px;right:10px;background:var(--emas);color:var(--putih);font-size:0.62rem;font-weight:600;padding:2px 8px;border-radius:99px;letter-spacing:0.04em;}
+.menu-body{padding:1.1rem;}
+.menu-name{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--kopi);margin-bottom:0.3rem;}
+.menu-desc{font-size:0.75rem;color:var(--coklat);line-height:1.5;margin-bottom:0.9rem;font-weight:300;}
+.menu-footer{display:flex;justify-content:space-between;align-items:center;}
+.menu-price{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:var(--emas);}
+.add-btn{width:30px;height:30px;border-radius:50%;background:var(--kopi);color:var(--susu);border:none;font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;}
+.add-btn:hover{background:var(--emas);transform:scale(1.1);}
+
+/* TENTANG */
+.tentang{padding:5rem 2.5rem;background:var(--krem);}
+.tentang-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center;}
+.tentang-left .s-title{margin-bottom:1rem;}
+.tentang-left p{font-size:0.9rem;color:var(--coklat);line-height:1.75;font-weight:300;margin-bottom:1rem;}
+.keunggulan{display:flex;flex-direction:column;gap:1rem;margin-top:1.5rem;}
+.kng-item{display:flex;gap:1rem;align-items:flex-start;}
+.kng-icon{width:40px;height:40px;border-radius:10px;background:var(--kopi);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;}
+.kng-item h4{font-size:0.88rem;font-weight:500;color:var(--kopi);margin-bottom:3px;}
+.kng-item p{font-size:0.78rem;color:var(--coklat);line-height:1.5;font-weight:300;}
+.tentang-right{background:var(--kopi);border-radius:24px;padding:2rem;color:var(--susu);}
+.testimoni-label{font-size:0.68rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--emas);margin-bottom:1.5rem;}
+.testi-card{background:rgba(255,255,255,0.05);border-radius:14px;padding:1.1rem;margin-bottom:0.75rem;}
+.testi-stars{color:var(--emas);font-size:0.75rem;margin-bottom:0.4rem;}
+.testi-text{font-size:0.82rem;color:rgba(240,230,208,0.8);line-height:1.5;font-style:italic;margin-bottom:0.6rem;font-weight:300;}
+.testi-author{font-size:0.72rem;color:rgba(240,230,208,0.45);font-weight:500;}
+.rating-big{text-align:center;margin-top:1.5rem;padding-top:1.5rem;border-top:0.5px solid rgba(255,255,255,0.08);}
+.rating-num{font-family:'Playfair Display',serif;font-size:3rem;color:var(--emas);font-weight:700;}
+.rating-label{font-size:0.75rem;color:rgba(240,230,208,0.45);}
+
+/* RESERVASI */
+.reservasi{padding:5rem 2.5rem;background:var(--putih);}
+.reservasi-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start;}
+.form-card{background:var(--susu);border-radius:20px;padding:2rem;border:0.5px solid var(--krem);}
+.form-title{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:var(--kopi);margin-bottom:0.3rem;}
+.form-sub{font-size:0.82rem;color:var(--coklat);font-weight:300;margin-bottom:1.5rem;}
+.form-group{margin-bottom:1rem;}
+.form-group label{display:block;font-size:0.75rem;font-weight:500;color:var(--coklat);margin-bottom:0.4rem;letter-spacing:0.03em;}
+.form-group input,.form-group select,.form-group textarea{width:100%;padding:0.65rem 1rem;border-radius:10px;border:1px solid var(--krem);background:var(--putih);font-family:'DM Sans',sans-serif;font-size:0.85rem;color:var(--kopi);outline:none;transition:border-color 0.2s;}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--emas);}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;}
+.submit-btn{width:100%;background:var(--kopi);color:var(--susu);padding:0.8rem;border-radius:99px;border:none;font-family:'DM Sans',sans-serif;font-size:0.88rem;font-weight:500;cursor:pointer;transition:all 0.2s;margin-top:0.5rem;}
+.submit-btn:hover{background:var(--emas);transform:translateY(-2px);}
+.lokasi-info{display:flex;flex-direction:column;gap:1.25rem;}
+.lokasi-title{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:var(--kopi);margin-bottom:0.5rem;}
+.info-row{display:flex;gap:1rem;align-items:flex-start;}
+.info-icon{width:40px;height:40px;border-radius:10px;background:var(--krem);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;}
+.info-row h4{font-size:0.85rem;font-weight:500;color:var(--kopi);margin-bottom:2px;}
+.info-row p{font-size:0.8rem;color:var(--coklat);line-height:1.5;font-weight:300;}
+.jam-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.5rem;margin-top:0.5rem;}
+.jam-item{background:var(--susu);border-radius:10px;padding:0.6rem 0.8rem;border:0.5px solid var(--krem);}
+.jam-day{font-size:0.72rem;font-weight:500;color:var(--coklat);}
+.jam-time{font-size:0.82rem;font-weight:500;color:var(--kopi);}
+.jam-item.tutup .jam-time{color:var(--merah);}
+
+/* FOOTER */
+footer{background:var(--kopi);padding:3rem 2.5rem 1.5rem;}
+.footer-top{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:2rem;margin-bottom:2rem;}
+.footer-brand .nav-logo-id{color:var(--susu);font-size:1.2rem;}
+.footer-brand .nav-logo-jawa{opacity:0.6;}
+.footer-brand p{font-size:0.8rem;color:rgba(240,230,208,0.45);line-height:1.6;margin-top:0.75rem;font-weight:300;max-width:240px;}
+.footer-col h4{font-size:0.75rem;font-weight:500;color:rgba(240,230,208,0.4);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:1rem;}
+.footer-col a,.footer-col p{display:block;font-size:0.82rem;color:rgba(240,230,208,0.6);text-decoration:none;margin-bottom:0.5rem;transition:color 0.2s;}
+.footer-col a:hover{color:var(--emas);}
+.footer-bottom{padding-top:1.5rem;border-top:0.5px solid rgba(255,255,255,0.07);display:flex;justify-content:space-between;align-items:center;}
+.footer-bottom p{font-size:0.72rem;color:rgba(240,230,208,0.25);}
+
+/* CART SIDEBAR */
+.cart-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:400;opacity:0;pointer-events:none;transition:opacity 0.3s;}
+.cart-overlay.open{opacity:1;pointer-events:all;}
+.cart-sidebar{position:fixed;right:0;top:0;bottom:0;width:380px;background:var(--putih);z-index:401;transform:translateX(100%);transition:transform 0.35s cubic-bezier(0.32,0,0.15,1);display:flex;flex-direction:column;box-shadow:-8px 0 40px rgba(0,0,0,0.15);}
+.cart-sidebar.open{transform:translateX(0);}
+.cart-head{padding:1.25rem 1.5rem;border-bottom:0.5px solid var(--krem);display:flex;justify-content:space-between;align-items:center;}
+.cart-head h3{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--kopi);}
+.cart-close{background:none;border:none;font-size:1.3rem;cursor:pointer;color:var(--coklat);}
+.cart-body{flex:1;overflow-y:auto;padding:1.25rem 1.5rem;}
+.cart-empty{text-align:center;padding:3rem 1rem;color:var(--coklat);}
+.cart-empty div{font-size:3rem;margin-bottom:0.75rem;}
+.cart-empty p{font-size:0.85rem;font-weight:300;}
+.cart-item{display:flex;gap:1rem;padding:0.9rem 0;border-bottom:0.5px solid var(--krem);}
+.ci-emoji{width:50px;height:50px;background:var(--krem);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0;}
+.ci-info{flex:1;}
+.ci-name{font-size:0.88rem;font-weight:500;color:var(--kopi);margin-bottom:2px;}
+.ci-price{font-size:0.82rem;color:var(--emas);font-weight:500;}
+.ci-qty{display:flex;align-items:center;gap:0.5rem;margin-top:0.4rem;}
+.qty-btn{width:24px;height:24px;border-radius:50%;border:1px solid var(--krem);background:none;cursor:pointer;font-size:0.9rem;display:flex;align-items:center;justify-content:center;transition:all 0.15s;}
+.qty-btn:hover{background:var(--kopi);color:var(--susu);border-color:var(--kopi);}
+.qty-num{font-size:0.85rem;font-weight:500;min-width:20px;text-align:center;}
+.ci-del{background:none;border:none;color:rgba(28,15,5,0.3);cursor:pointer;font-size:0.85rem;transition:color 0.2s;align-self:flex-start;}
+.ci-del:hover{color:var(--merah);}
+.cart-foot{padding:1.25rem 1.5rem;border-top:0.5px solid var(--krem);}
+.cart-total-row{display:flex;justify-content:space-between;font-size:0.85rem;color:var(--coklat);margin-bottom:0.5rem;}
+.cart-total-row.big{font-weight:600;font-size:1rem;color:var(--kopi);}
+.checkout-btn{width:100%;background:var(--kopi);color:var(--susu);padding:0.85rem;border-radius:99px;border:none;font-family:'DM Sans',sans-serif;font-size:0.9rem;font-weight:500;cursor:pointer;margin-top:0.75rem;transition:all 0.2s;}
+.checkout-btn:hover{background:var(--emas);}
+
+/* TOAST */
+.toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(20px);background:var(--kopi);color:var(--susu);padding:0.7rem 1.5rem;border-radius:99px;font-size:0.82rem;font-weight:500;z-index:500;opacity:0;transition:all 0.3s;pointer-events:none;white-space:nowrap;}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+/* MODAL RESERVASI SUCCESS */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:600;display:none;align-items:center;justify-content:center;}
+.modal-overlay.open{display:flex;}
+.modal{background:var(--putih);border-radius:20px;padding:2.5rem;max-width:380px;width:90%;text-align:center;}
+.modal-icon{font-size:3rem;margin-bottom:1rem;}
+.modal h3{font-family:'Playfair Display',serif;font-size:1.4rem;color:var(--kopi);margin-bottom:0.5rem;}
+.modal p{font-size:0.85rem;color:var(--coklat);line-height:1.6;font-weight:300;margin-bottom:1.5rem;}
+.modal-btn{background:var(--kopi);color:var(--susu);padding:0.7rem 2rem;border-radius:99px;border:none;font-family:'DM Sans',sans-serif;font-size:0.85rem;cursor:pointer;transition:background 0.2s;}
+.modal-btn:hover{background:var(--emas);}
+
+/* ANIMATIONS */
+@keyframes up{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:translateY(0);}}
+@keyframes fadein{from{opacity:0;}to{opacity:1;}}
+@keyframes ticker{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  nav{padding:0.9rem 1.2rem;}
+  .nav-links{display:none;}
+  .hero{grid-template-columns:1fr;padding:5rem 1.2rem 2rem;}
+  .hero-visual{display:none;}
+  .menu-grid{grid-template-columns:1fr 1fr;}
+  .tentang-grid,.reservasi-grid,.footer-top{grid-template-columns:1fr;}
+  .cart-sidebar{width:100%;}
+  .menu-section,.tentang,.reservasi{padding:3rem 1.2rem;}
+}
+</style>
+</head>
+<body>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- CART OVERLAY -->
+<div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+<div class="cart-sidebar" id="cartSidebar">
+  <div class="cart-head">
+    <h3>🛒 Pesananmu</h3>
+    <button class="cart-close" onclick="toggleCart()">✕</button>
+  </div>
+  <div class="cart-body" id="cartBody">
+    <div class="cart-empty"><div>☕</div><p>Belum ada pesanan.<br>Yuk pilih menu favoritmu!</p></div>
+  </div>
+  <div class="cart-foot" id="cartFoot" style="display:none;">
+    <div class="cart-total-row"><span>Subtotal</span><span id="subtotal">Rp 0</span></div>
+    <div class="cart-total-row"><span>Biaya layanan</span><span>Rp 2.000</span></div>
+    <div class="cart-total-row big"><span>Total</span><span id="totalHarga">Rp 0</span></div>
+    <button class="checkout-btn" onclick="checkout()">
+  Konfirmasi Pesanan →
+</button>
+  </div>
+</div>
+
+<!-- MODAL SUCCESS -->
+<div class="modal-overlay" id="modalReservasi">
+  <div class="modal">
+    <div class="modal-icon">✅</div>
+    <h3>Reservasi Diterima!</h3>
+    <p id="modalMsg">Terima kasih! Kami akan mengonfirmasi reservasimu segera melalui WhatsApp.</p>
+    <button class="modal-btn" onclick="closeModal()">Tutup</button>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav id="navbar">
+  <div class="nav-logo">
+    <div class="nav-logo-id">Aksara Kopi</div>
+    <div class="nav-logo-jawa">ꦄꦏ꧀ꦱꦫ ꦏꦺꦴꦥꦶ</div>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#hero">Beranda</a></li>
+    <li><a href="#menu">Menu</a></li>
+    <li><a href="#tentang">Tentang</a></li>
+    <li><a href="#reservasi">Reservasi</a></li>
+  </ul>
+  <div class="nav-actions">
+    <button class="cart-btn" onclick="toggleCart()">
+      🛒
+      <span class="cart-count" id="cartCount">0</span>
+    </button>
+    <button class="btn-pesan" onclick="document.getElementById('reservasi').scrollIntoView({behavior:'smooth'})">Reservasi</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-text">
+    <div class="hero-waktu" id="salam">🌅 Selamat Pagi dari Magetan</div>
+    <h1 class="hero-title">Rasakan Kehangatan<br>Aksara Kopi</h1>
+    <div class="hero-jawa">ꦄꦏ꧀ꦱꦫ ꦏꦺꦴꦥꦶ</div>
+    <p class="hero-desc">Awali harimu dengan secangkir kopi terbaik yang diseduh dari biji pilihan, ditemani suasana hangat yang membuat setiap momen terasa lebih berarti.</p>
+    <div class="hero-btns">
+      <button class="btn-main" onclick="document.getElementById('menu').scrollIntoView({behavior:'smooth'})">Lihat Menu ☕</button>
+      <button class="btn-ghost" onclick="document.getElementById('reservasi').scrollIntoView({behavior:'smooth'})">Reservasi Meja</button>
+    </div>
+    <div class="hero-info">
+      <div class="info-chip">📍 Jl. Lawu No. 10, Magetan</div>
+      <div class="info-chip">🕐 Buka 07.00–22.00</div>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-card">
+      <div class="hero-card">
+  <img src="hero-card.png" class="hero-img">
+  
+  <div class="hcard-label">Menu Spesial Hari Ini</div>
+  <div class="hcard-title">Es Kopi Susu Aksara</div>
+  <div class="hcard-sub">Signature drink favorit pelanggan.</div>
+
+  <button class="hcard-order" onclick="addToCart('Es Kopi Susu Aksara','☕',22000);toggleCart()">
+    + Pesan Sekarang — Rp 22.000
+  </button>
+</div>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-inner">
+    <div class="ticker-item">☕ <span>Es Kopi Susu Aksara</span> — Rp 22.000</div>
+    <div class="ticker-item">🌿 <span>Manual Brew</span> — Rp 28.000</div>
+    <div class="ticker-item">🍵 <span>Matcha Latte</span> — Rp 25.000</div>
+    <div class="ticker-item">🧋 <span>Brown Sugar Boba</span> — Rp 24.000</div>
+    <div class="ticker-item">🍫 <span>Dark Choco</span> — Rp 23.000</div>
+    <div class="ticker-item">☕ <span>Es Kopi Susu Aksara</span> — Rp 22.000</div>
+    <div class="ticker-item">🌿 <span>Manual Brew</span> — Rp 28.000</div>
+    <div class="ticker-item">🍵 <span>Matcha Latte</span> — Rp 25.000</div>
+    <div class="ticker-item">🧋 <span>Brown Sugar Boba</span> — Rp 24.000</div>
+    <div class="ticker-item">🍫 <span>Dark Choco</span> — Rp 23.000</div>
+  </div>
+</div>
+
+<!-- MENU -->
+<section class="menu-section" id="menu">
+  <div class="section-head">
+    <span class="s-tag">Menu Kami</span>
+    <h2 class="s-title">Pilihan untuk Setiap Momen</h2>
+    <p class="s-sub">Dari kopi lokal hingga minuman spesial — semua dibuat dengan bahan pilihan terbaik.</p>
+  </div>
+  <div class="menu-filter">
+    <button class="filter-btn active" onclick="filterMenu('semua',this)">Semua</button>
+    <button class="filter-btn" onclick="filterMenu('kopi',this)">Kopi</button>
+    <button class="filter-btn" onclick="filterMenu('nonkopi',this)">Non-Kopi</button>
+    <button class="filter-btn" onclick="filterMenu('makanan',this)">Makanan</button>
+  </div>
+  <div class="menu-grid" id="menuGrid"></div>
+</section>
+
+<!-- TENTANG -->
+<section class="tentang" id="tentang">
+  <div class="tentang-grid">
+    <div class="tentang-left">
+      <span class="s-tag">Tentang Kami</span>
+      <h2 class="s-title">Lebih dari Sekadar Kopi</h2>
+      <p>Aksara Kopi bukan sekadar tempat minum kopi — ini adalah ruang untuk berhenti sejenak dari hiruk pikuk kehidupan. Di sini, setiap sudut dirancang untuk menghadirkan kenyamanan.</p>
+      <p>Kami percaya bahwa kopi adalah bahasa universal yang mampu menyatukan obrolan, mempererat koneksi, dan menemani perjalananmu.</p>
+      <div class="keunggulan">
+        <div class="kng-item">
+          <div class="kng-icon">🏡</div>
+          <div><h4>Nyaman & Estetik</h4><p>Interior hangat dan suasana tenang untuk bekerja, belajar, atau sekadar menikmati waktu sendiri.</p></div>
+        </div>
+        <div class="kng-item">
+          <div class="kng-icon">🌱</div>
+          <div><h4>Kualitas Tanpa Kompromi</h4><p>Biji kopi fresh roasted setiap hari langsung dari petani lokal Jawa Timur.</p></div>
+        </div>
+        <div class="kng-item">
+          <div class="kng-icon">🤝</div>
+          <div><h4>Komunitas Magetan</h4><p>Lebih dari kafe — Aksara Kopi adalah rumah bagi komunitas lokal.</p></div>
+        </div>
+      </div>
+    </div>
+    <div class="tentang-right">
+      <div class="testimoni-label">⭐ Ulasan Pelanggan</div>
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-text">"Kopinya enak banget, suasananya juga nyaman. Jadi tempat favorit kerja remote saya di Magetan!"</div>
+        <div class="testi-author">— Rina W., Pelanggan Setia</div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-text">"Manual brew-nya juara! Barista-nya juga ramah dan informatif soal origin kopi. Highly recommended!"</div>
+        <div class="testi-author">— Bagas A., Coffee Enthusiast</div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">★★★★☆</div>
+        <div class="testi-text">"Tempatnya Instagramable, WiFi kencang, harga terjangkau. Cocok banget buat mahasiswa Magetan."</div>
+        <div class="testi-author">— Dinda P., Mahasiswa</div>
+      </div>
+      <div class="rating-big">
+        <div class="rating-num">4.9</div>
+        <div class="rating-label">Rating rata-rata dari 200+ ulasan</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESERVASI -->
+<section class="reservasi" id="reservasi">
+  <div class="section-head" style="text-align:center;">
+    <span class="s-tag">Reservasi Meja</span>
+    <h2 class="s-title">Pesan Mejamu Sekarang</h2>
+    <p class="s-sub" style="margin:0 auto;">Pastikan mejamu tersedia untuk momen spesialmu di Aksara Kopi.</p>
+  </div>
+  <div class="reservasi-grid" style="margin-top:2.5rem;">
+    <div class="form-card">
+      <div class="form-title">Form Reservasi</div>
+      <div class="form-sub">Isi data di bawah dan kami akan konfirmasi via WhatsApp.</div>
+      <form id="reservasiForm" onsubmit="submitReservasi(event)">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Nama Lengkap *</label>
+            <input type="text" id="rNama" placeholder="Nama kamu" required>
+          </div>
+          <div class="form-group">
+            <label>No. WhatsApp *</label>
+            <input type="tel" id="rWa" placeholder="08xxxxxxxxxx" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Tanggal *</label>
+            <input type="date" id="rTanggal" required>
+          </div>
+          <div class="form-group">
+            <label>Jam *</label>
+            <input type="time" id="rJam" min="07:00" max="21:30" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Jumlah Orang *</label>
+            <select id="rOrang" required>
+              <option value="">Pilih</option>
+              <option>1 orang</option><option>2 orang</option><option>3 orang</option>
+              <option>4 orang</option><option>5 orang</option><option>6+ orang</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Area</label>
+            <select id="rArea">
+              <option>Indoor</option>
+              <option>Outdoor</option>
+              <option>Private Room</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Catatan Khusus</label>
+          <textarea id="rCatatan" rows="2" placeholder="Ulang tahun, anniversary, dll..."></textarea>
+        </div>
+        <button type="submit" class="submit-btn">Konfirmasi Reservasi ✓</button>
+      </form>
+    </div>
+    <div class="lokasi-info">
+      <div>
+        <span class="s-tag">Lokasi & Info</span>
+        <div class="lokasi-title">Temukan Kami</div>
+      </div>
+      <div class="info-row">
+        <div class="info-icon">📍</div>
+        <div><h4>Alamat</h4><p>Jl. Lawu No. 10, Magetan<br>Jawa Timur 63318</p></div>
+      </div>
+      <div class="info-row">
+        <div class="info-icon">📱</div>
+        <div><h4>Kontak</h4><p>WhatsApp: 0812-xxxx-xxxx<br>Instagram: @aksara.kopi</p></div>
+      </div>
+      <div class="info-row">
+        <div class="info-icon">🕐</div>
+        <div>
+          <h4>Jam Operasional</h4>
+          <div class="jam-grid">
+            <div class="jam-item"><div class="jam-day">Senin – Jumat</div><div class="jam-time">07.00 – 22.00</div></div>
+            <div class="jam-item"><div class="jam-day">Sabtu – Minggu</div><div class="jam-time">07.00 – 23.00</div></div>
+            <div class="jam-item tutup"><div class="jam-day">Hari Raya</div><div class="jam-time">Tutup</div></div>
+            <div class="jam-item"><div class="jam-day">Last Order</div><div class="jam-time">21.30 WIB</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="nav-logo-id" style="color:var(--susu);font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;">Aksara Kopi</div>
+      <div class="nav-logo-jawa" style="color:var(--emas);font-size:0.82rem;margin-top:2px;">ꦄꦏ꧀ꦱꦫ ꦏꦺꦴꦥꦶ</div>
+      <p>Tempat dimana rasa, cerita, dan kehangatan bertemu di jantung kota Magetan.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Menu</h4>
+      <a href="#">Kopi Lokal</a>
+      <a href="#">Manual Brew</a>
+      <a href="#">Non-Kopi</a>
+      <a href="#">Makanan</a>
+    </div>
+    <div class="footer-col">
+      <h4>Info</h4>
+      <a href="#">Tentang Kami</a>
+      <a href="#">Reservasi</a>
+      <a href="#">Karir</a>
+      <p>© 2026 Aksara Kopi Magetan</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>Dibuat dengan ❤️ untuk komunitas Magetan</p>
+    <p>Prototype — Sesi 4–5 Prompt to Prototype SMK Negeri Takeran</p>
+  </div>
+</footer>
+
+<script src="js/menu.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/reservasi.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

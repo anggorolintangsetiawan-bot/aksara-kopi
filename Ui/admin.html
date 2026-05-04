@@ -1,0 +1,14 @@
+<script>
+fetch('http://localhost:3000/api/order')
+  .then(res => res.json())
+  .then(data => {
+    document.body.innerHTML = data.map(o => `
+      <div>
+        <h3>Order #${o.id}</h3>
+        <p>Nama: ${o.nama}</p>
+        <p>Total: Rp ${o.total}</p>
+        <hr>
+      </div>
+    `).join('');
+  });
+</script>
