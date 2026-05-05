@@ -1,5 +1,5 @@
-const sqlite3 = require('sqlite3').verbose();
-const db = new sqlite3.Database('./aksara.db');
+const Database = require('better-sqlite3');
+const db = new Database('./aksara.db');
 
 db.serialize(() => {
 
