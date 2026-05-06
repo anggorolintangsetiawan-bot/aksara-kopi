@@ -11,7 +11,7 @@ async function submitReservasi(e) {
     catatan: document.getElementById('rCatatan').value
   };
 
-  const res = await fetch('http://localhost:3000/api/reservasi', {
+  const res = await fetch('https://aksara-kopi-production.up.railway.app/api/reservasi', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
