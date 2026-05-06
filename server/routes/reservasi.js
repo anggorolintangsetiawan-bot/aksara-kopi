@@ -4,26 +4,29 @@ const db = require('../db');
 
 // 🔥 TAMBAH INI (GET SEMUA RESERVASI)
 router.get('/', (req, res) => {
-  db.all(`SELECT * FROM reservasi ORDER BY id DESC`, [], (err, rows) => {
-    if (err) return res.status(500).json(err);
+  try {
+    const rows = db.prepare(`SELECT * FROM reservasi ORDER BY id DESC`).all();
     res.json(rows);
-  });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json(err);
+  }
 });
-
 // SIMPAN RESERVASI
 router.post('/', (req, res) => {
   const { nama, wa, tanggal, jam, orang, area, catatan } = req.body;
 
-  db.run(
-    `INSERT INTO reservasi (nama, wa, tanggal, jam, orang, area, catatan)
-     VALUES (?, ?, ?, ?, ?, ?, ?)`,
-    [nama, wa, tanggal, jam, orang, area, catatan],
-    function (err) {
-      if (err) return res.status(500).json({ error: err.message });
+  try {
+    const result = db.prepare(`
+      INSERT INTO reservasi (nama, wa, tanggal, jam, orang, area, catatan)
+      VALUES (?, ?, ?, ?, ?, ?, ?)
+    `).run(nama, wa, tanggal, jam, orang, area, catatan);
 
-      res.json({ message: 'Reservasi berhasil', id: this.lastID });
-    }
-  );
+    res.json({ success: true, id: result.lastInsertRowid });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json(err);
+  }
 });
 
 module.exports = router;
