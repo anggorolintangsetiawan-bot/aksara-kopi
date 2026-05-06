@@ -6,7 +6,7 @@ const menuData = [
   {nama:'Brown Sugar Boba',img:'js/img/brown-sugar-boba.jpg',harga:24000,kategori:'nonkopi',badge:'',desc:'Teh susu + boba.'},
   {nama:'Dark Choco',img:'js/img/dark-choco.jpg',harga:23000,kategori:'nonkopi',badge:'',desc:'Coklat premium.'},
   {nama:'Croissant Butter',img:'js/img/croissant-butter.jpg',harga:18000,kategori:'makanan',badge:'',desc:'Croissant renyah.'},
-  {nama:'Banana Toast',img:'js/img/banana-toast.webp',harga:20000,kategori:'makanan',badge:'Baru',desc:'Roti + pisang.'},
+  {nama:'Banana Toast',img:'js/img/pnutty-banana-toast.webp',harga:20000,kategori:'makanan',badge:'Baru',desc:'Roti + pisang.'},
   {nama:'Avocado Toast',img:'js/img/avocado_toast.webp',harga:22000,kategori:'makanan',badge:'',desc:'Roti + alpukat.'},
 ];
 
