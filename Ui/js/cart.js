@@ -64,7 +64,7 @@ function checkout() {
 
   const total = cart.reduce((sum, item) => sum + item.harga * item.qty, 0);
 
-  fetch('http://localhost:3000/api/order', {
+  fetch('https://aksara-kopi-production.up.railway.app/api/order', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
